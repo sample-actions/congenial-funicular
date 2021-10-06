@@ -29,9 +29,6 @@ jobs:
          export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
          echo $PR_NUMBER
          echo "pr_num=$PR_NUMBER" >> $GITHUB_ENV
-         
-         
-      - run: echo "${{ env.pr_num }}" # This will output 'yellow'
 
 # echo "::set-output name=pr_num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
 
@@ -42,6 +39,6 @@ jobs:
            await github.rest.issues.createComment({
            owner: context.repo.owner, 
            repo: context.repo.repo, 
-           issue_number: 1,
+           issue_number: ${{ env.pr_num }},
            body: 'Its Success'
            });
