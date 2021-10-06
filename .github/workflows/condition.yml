@@ -14,8 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     # main <-- dev-a
     if: ${{ github.head_ref == 'dev-a' && github.base_ref == 'main' }}
+    env:
+      PR_NUMBER: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+      
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         
@@ -27,25 +31,14 @@ jobs:
          echo ${{ github.head_ref }}
          echo ${{ github.base_ref }}
          echo PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
-         
-#       - name: Add Comment to Pull Request if Success
-#         uses: actions/github-script@v5
-#         with:
-#           script: |
-#            await github.pulls.createComment({ 
-#            owner: context.repo.owner, 
-#            repo: context.repo.repo, 
-#            pull_number: , 
-#            body: 'It's Success',
-#            commit_id: , 
-#            path
-#            })
-
-# rest.issues.createComment({
-#   owner: context.repo.owner, 
-#   repo: context.repo.repo, 
-#   issue_number,
-#   body: 'It's Success',
-# });
-       
-     
+        
+      - name: Add Comment to Pull Request if Success
+        uses: actions/github-script@v5
+        with:
+          script: |
+           await github.rest.issues.createComment({
+           owner: context.repo.owner, 
+           repo: context.repo.repo, 
+           issue_number: env.PR_NUMBER,
+           body: 'It's Success',
+           });
