@@ -14,8 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     # main <-- dev-a
     if: ${{ github.head_ref == 'dev-a' && github.base_ref == 'main' }}
-    env:
-     PR_NUMBER: ${{ $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }') }}
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -30,11 +29,9 @@ jobs:
          export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
          echo $PR_NUMBER
          echo "pr_num=$PR_NUMBER" >> $GITHUB_ENV
-         
+         echo "action_state=yellow" >> $GITHUB_ENV
          echo ${{ env.pr_num }}
-         
-         echo ${{ env.PR_NUMBER }}
-         
+         echo "${{ env.action_state }}" # This will output 'yellow'
 # echo "::set-output name=pr_num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
 
 
