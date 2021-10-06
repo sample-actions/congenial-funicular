@@ -27,7 +27,7 @@ jobs:
          echo ${{ github.head_ref }}
          echo ${{ github.base_ref }}
          
-         echo "pr_num=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')" >> $GITHUB_ENV
+         echo "pr_num=$(echo $GITHUB_REF | awk 'BEGIN { FS=/ } ; { print $3 }')" >> $GITHUB_ENV
          
          echo ${{ env.pr_num }}
          
