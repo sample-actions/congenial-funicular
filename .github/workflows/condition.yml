@@ -25,12 +25,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-         echo Hello, world!
          echo ${{ github.ref }}
          echo ${{ github.head_ref }}
          echo ${{ github.base_ref }}
-         echo ${{ env.PR_NUMBER }}
-#        PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+         PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+         echo "pr_num=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')" >> $GITHUB_ENV
+         echo ${{ env.pr_num }}
+# echo "::set-output name=pr_num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
+         
         
       - name: Add Comment to Pull Request if Success
         uses: actions/github-script@v5
