@@ -28,12 +28,11 @@ jobs:
          echo ${{ github.base_ref }}
          export PR_NUMBER=$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
          echo $PR_NUMBER
-         echo "pr_num=$PR_NUMBER" >> $GITHUB_ENV
          echo "action_state=yellow" >> $GITHUB_ENV
-         echo ${{ env.pr_num }}
-         echo "${{ env.action_state }}" # This will output 'yellow'
-# echo "::set-output name=pr_num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
+         
+      - run: echo "${{ env.action_state }}" # This will output 'yellow'
 
+# echo "::set-output name=pr_num::$(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')"
 
       - name: Add Comment to Pull Request if Success
         uses: actions/github-script@v5
