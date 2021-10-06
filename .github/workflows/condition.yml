@@ -43,5 +43,5 @@ jobs:
            owner: context.repo.owner, 
            repo: context.repo.repo, 
            issue_number: 1,
-           body: 'It's Success',
+           body: 'Its Success'
            });
